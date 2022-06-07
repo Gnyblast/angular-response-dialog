@@ -26,9 +26,9 @@
 }
 
 .success {
-  background-color: green;
+  background-color: #40c51f;
 }
 
 .fail {
-  background-color: red;
+  background-color: #ff3535;
 }
