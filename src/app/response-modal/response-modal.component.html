@@ -7,20 +7,24 @@
     "
   >
     <div
-      (click)="close(getKey(response.value))"
-      *ngIf="!response.value[getKey(response.value)].close"
+      (click)="close(getKey(objectCast(response.value)))"
+      *ngIf="
+        !objectCast(response.value)[getKey(objectCast(response.value))].close
+      "
       [ngClass]="[
-        response.value[getKey(response.value)].isNew
-          ? response.value[getKey(response.value)].class
+        objectCast(response.value)[getKey(objectCast(response.value))].isNew
+          ? objectCast(response.value)[getKey(objectCast(response.value))].class
           : 'show',
-        response.value[getKey(response.value)].status ? 'success' : 'fail'
+        objectCast(response.value)[getKey(objectCast(response.value))]
+          .statusClass
       ]"
       class="dynamic-response"
     >
       {{
-        response.value[getKey(response.value)].response +
-          ' | ' +
-          getKey(response.value)
+        objectCast(response.value)[getKey(objectCast(response.value))]
+          .response +
+          ' - ' +
+          response.key
       }}
     </div>
   </div>

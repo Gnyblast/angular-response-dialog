@@ -29,7 +29,7 @@ export class ResponseModalComponent implements OnInit {
         isNew: true,
         response: 'test',
         class: '',
-        status: true,
+        statusClass: 'success',
         close: false,
         type: 'open',
       },
@@ -120,5 +120,9 @@ export class ResponseModalComponent implements OnInit {
 
   public getKey(obj: ResponseObject): string {
     return Object.keys(obj)[0];
+  }
+
+  public objectCast(obj: any) {
+    return obj as ResponseObject;
   }
 }

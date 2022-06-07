@@ -5,7 +5,7 @@ export interface ResponseItem {
   isNew: boolean;
   response: string;
   class: string;
-  status: boolean;
+  statusClass: string;
   close: boolean;
   type: string;
 }
