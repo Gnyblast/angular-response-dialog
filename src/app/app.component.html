@@ -1,3 +1,4 @@
 <hello name="{{ name }}"></hello>
 <p>Start editing to see some magic happen :)</p>
-<app-response-modal></app-response-modal>
+<button (click)="sendResponse()">Trigger</button>
+<app-response-modal [incomingResponse]="response"></app-response-modal>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ResponseDialogItem } from './response-item';
 
 @Component({
   selector: 'my-app',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent  {
   name = 'Angular';
+  public response: BehaviorSubject<ResponseDialogItem | null> = new BehaviorSubject<ResponseDialogItem | null>(null)
+
+  public sendResponse(){
+    this.response.next({message: "Some Test", stateClass: "success"} as ResponseDialogItem)
+  }
 }

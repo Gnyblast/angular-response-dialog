@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ResponseItem, ResponseObject } from '../response-item';
+import {
+  ResponseDialogItem,
+  ResponseItem,
+  ResponseObject,
+} from '../response-item';
 
 @Component({
   selector: 'app-response-modal',
@@ -8,6 +12,8 @@ import { ResponseItem, ResponseObject } from '../response-item';
   styleUrls: ['./response-modal.component.css'],
 })
 export class ResponseModalComponent implements OnInit {
+  @Input() incomingResponse: BehaviorSubject<ResponseDialogItem | null> =
+    new BehaviorSubject<ResponseDialogItem | null>(null);
   public responses: BehaviorSubject<ResponseObject[]> = new BehaviorSubject<
     ResponseObject[]
   >([]);
@@ -20,29 +26,35 @@ export class ResponseModalComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.incomingResponse.subscribe((val) => {
+      if (val != null) {
+        let key = 'resp' + this.key;
+        let newResponse = {
+          [key]: {
+            isNew: true,
+            response: val.message,
+            class: '',
+            statusClass: val.stateClass,
+            close: false,
+            type: 'open',
+          },
+        } as ResponseObject;
+        this.key++;
+        this.responses.value.push(newResponse);
+        this.responses.next(this.responses.value);
+        this.triggerResponse(newResponse);
+      }
+    });
+  }
 
-  public triggerResponse() {
-    let newKey = 'resp' + this.key;
-    let newNot = {
-      [newKey]: {
-        isNew: true,
-        response: 'test',
-        class: '',
-        statusClass: 'success',
-        close: false,
-        type: 'open',
-      },
-    } as ResponseObject;
-    this.key++;
-    this.responses.value.push(newNot);
-    this.responses.next(this.responses.value);
+  public triggerResponse(newResponse: ResponseObject) {
     if (
       !this.responseQueue.some((val) => {
-        return this.getKey(val) === this.getKey(newNot);
+        return this.getKey(val) === this.getKey(newResponse);
       })
     ) {
-      this.responseQueue.push(newNot);
+      this.responseQueue.push(newResponse);
     }
     this.queueNewResponses();
   }

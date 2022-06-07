@@ -9,3 +9,8 @@ export interface ResponseItem {
   close: boolean;
   type: string;
 }
+
+export interface ResponseDialogItem {
+  message: string;
+  stateClass: string;
+}
