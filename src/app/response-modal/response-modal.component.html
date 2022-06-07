@@ -1,0 +1,27 @@
+<button (click)="triggerResponse()">Trigger</button>
+<div id="response-holder">
+  <div
+    *ngFor="
+      let response of responses.value | keyvalue: returnZero;
+      let i = index
+    "
+  >
+    <div
+      (click)="close(getKey(response.value))"
+      *ngIf="!response.value[getKey(response.value)].close"
+      [ngClass]="[
+        response.value[getKey(response.value)].isNew
+          ? response.value[getKey(response.value)].class
+          : 'show',
+        response.value[getKey(response.value)].status ? 'success' : 'fail'
+      ]"
+      class="dynamic-response"
+    >
+      {{
+        response.value[getKey(response.value)].response +
+          ' | ' +
+          getKey(response.value)
+      }}
+    </div>
+  </div>
+</div>
